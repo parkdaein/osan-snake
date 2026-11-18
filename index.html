@@ -5,17 +5,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>누님, 저 독사에요</title>
+
 <style>
 * { box-sizing:border-box; }
+
 body {
-  margin:0; padding:15px;
+  margin:0;
+  padding:15px;
   background:#17131a;
   color:#fff;
-  font-family:Arial, sans-serif;
+  font-family:Arial,sans-serif;
   text-align:center;
 }
+
 #game {
-  width:100%; max-width:560px;
+  width:100%;
+  max-width:560px;
   margin:0 auto;
   background:#29212d;
   border:3px solid #a87943;
@@ -23,26 +28,41 @@ body {
   padding:18px;
   min-height:600px;
 }
-h1 { color:#ffd36b; font-size:29px; margin:12px 0; }
+
+h1 {
+  color:#ffd36b;
+  font-size:29px;
+  margin:12px 0;
+}
+
 h2 { color:#ffd36b; }
-.subtitle { color:#d6c5b0; font-size:14px; }
+
+.subtitle {
+  color:#d6c5b0;
+  font-size:14px;
+}
+
 .screen { display:none; }
 .screen.active { display:block; }
+
 .character {
   font-size:90px;
   margin:18px auto;
   line-height:1.3;
 }
+
 .boss {
   font-size:85px;
   margin:15px auto;
 }
+
 .status {
   background:#17131a;
   border-radius:12px;
   padding:12px;
   margin:15px 0;
 }
+
 .gauge {
   height:22px;
   background:#51434b;
@@ -50,12 +70,29 @@ h2 { color:#ffd36b; }
   overflow:hidden;
   margin:8px 0;
 }
+
 .gauge-fill {
   height:100%;
   width:100%;
   background:linear-gradient(90deg,#e34c4c,#ffb347);
   transition:width .3s;
 }
+
+.boss-gauge {
+  background:#51434b;
+  height:24px;
+  border-radius:20px;
+  overflow:hidden;
+  margin:8px 0;
+}
+
+.boss-gauge-fill {
+  height:100%;
+  width:100%;
+  background:linear-gradient(90deg,#a51e35,#ff6262);
+  transition:width .3s;
+}
+
 button {
   border:0;
   border-radius:12px;
@@ -67,13 +104,20 @@ button {
   background:#e6a94b;
   color:#24180c;
 }
+
 button:active { transform:scale(.96); }
-button:disabled { opacity:.4; cursor:not-allowed; }
+
+button:disabled {
+  opacity:.4;
+  cursor:not-allowed;
+}
+
 .main-btn {
   background:#f4c45e;
   padding:16px 28px;
   font-size:19px;
 }
+
 .choice {
   width:27%;
   min-width:85px;
@@ -81,11 +125,13 @@ button:disabled { opacity:.4; cursor:not-allowed; }
   padding:15px 5px;
   background:#f2e5ce;
 }
+
 .choice span {
   display:block;
   font-size:14px;
   margin-top:5px;
 }
+
 .info {
   background:#3b303f;
   padding:12px;
@@ -93,8 +139,9 @@ button:disabled { opacity:.4; cursor:not-allowed; }
   line-height:1.7;
   margin:12px 0;
 }
+
 #message {
-  min-height:65px;
+  min-height:70px;
   padding:12px;
   background:#17131a;
   border-radius:10px;
@@ -102,28 +149,62 @@ button:disabled { opacity:.4; cursor:not-allowed; }
   line-height:1.6;
   color:#ffe2a6;
 }
+
 .inventory {
   color:#ffd36b;
   font-weight:bold;
   font-size:17px;
 }
+
 .boss-name {
   font-size:24px;
   font-weight:bold;
   color:#ffcf75;
 }
-.small { font-size:13px; color:#c9b9c9; }
-.result { font-size:25px; font-weight:bold; margin:12px; }
+
+.small {
+  font-size:13px;
+  color:#c9b9c9;
+}
+
+.result {
+  font-size:25px;
+  font-weight:bold;
+  margin:12px;
+}
+
+.hp-label {
+  display:flex;
+  justify-content:space-between;
+  font-size:14px;
+  margin-top:10px;
+}
+
 @media(max-width:500px) {
   body { padding:5px; }
-  #game { padding:10px; min-height:95vh; }
+
+  #game {
+    padding:10px;
+    min-height:95vh;
+  }
+
   h1 { font-size:25px; }
+
   .character,.boss { font-size:70px; }
-  button { padding:11px 12px; font-size:14px; }
-  .choice { min-width:0; font-size:32px; }
+
+  button {
+    padding:11px 12px;
+    font-size:14px;
+  }
+
+  .choice {
+    min-width:0;
+    font-size:32px;
+  }
 }
 </style>
 </head>
+
 <body>
 
 <div id="game">
@@ -132,148 +213,239 @@ button:disabled { opacity:.4; cursor:not-allowed; }
   <div id="titleScreen" class="screen active">
     <h1>누님, 저 독사에요</h1>
     <div class="subtitle">궐동 독사의 위대한 누님 공략기</div>
+
     <div class="character">🐍</div>
+
     <div class="info">
       궐동 독사, 드디어 출격하다!<br>
       수많은 누님들의 마음을 얻기 위한<br>
       험난한 여정이 시작됩니다.
     </div>
-    <p>가위바위보에서 승리하여 보스를 공략하세요.</p>
+
+    <p>가위바위보에서 승리하여 보스의 체력을 깎으세요!</p>
+
     <button class="main-btn" onclick="startGame()">게임 시작</button>
   </div>
 
+
   <!-- 전투 화면 -->
   <div id="battleScreen" class="screen">
+
     <h1>누님, 저 독사에요</h1>
 
+    <!-- 플레이어 상태 -->
     <div class="status">
       <div>🐍 궐동 독사 정력 게이지</div>
+
       <div class="gauge">
         <div id="energyBar" class="gauge-fill"></div>
       </div>
+
       <div id="energyText">100 / 100</div>
-      <div class="inventory">🍶 소주 보유량: <span id="sojuText">0</span>병</div>
+
+      <div class="inventory">
+        🍶 소주 보유량: <span id="sojuText">0</span>병
+      </div>
+
       <button onclick="drinkSoju()">🍶 소주 마시기</button>
     </div>
 
+
+    <!-- 보스 정보 -->
     <div class="info">
+
       <div id="stageText">STAGE 1</div>
+
       <div class="boss">👩</div>
+
       <div class="boss-name" id="bossName">윤미래</div>
+
+      <div class="hp-label">
+        <span>❤️ 보스 체력</span>
+        <span id="bossHpText">50 / 50</span>
+      </div>
+
+      <div class="boss-gauge">
+        <div id="bossHpBar" class="boss-gauge-fill"></div>
+      </div>
+
       <p id="probability">승리 확률 70%</p>
+
     </div>
 
+
+    <!-- 가위바위보 -->
     <h3>가위바위보 대결!</h3>
-    <p>무엇을 내시겠습니까?</p>
+    <p>승리하면 보스에게 피해를 줍니다!</p>
 
     <div>
       <button class="choice" onclick="play('가위')">
         ✌️<span>가위</span>
       </button>
+
       <button class="choice" onclick="play('바위')">
         ✊<span>바위</span>
       </button>
+
       <button class="choice" onclick="play('보')">
         ✋<span>보</span>
       </button>
     </div>
 
-    <div id="message">누님에게 도전장을 내미세요!</div>
+    <div id="message">
+      누님에게 도전장을 내미세요!
+    </div>
+
   </div>
+
 
   <!-- 스테이지 클리어 -->
   <div id="clearScreen" class="screen">
+
     <h1>공략 성공!</h1>
+
     <div class="character">😍</div>
+
     <div class="result" id="clearBossName">윤미래</div>
+
     <div class="info">
-      궐동 독사의 매력에 누님이 넘어갔습니다!<br>
-      <br>
+      보스의 체력을 모두 소진시켰습니다!<br>
+      궐동 독사의 매력이 통했습니다!<br><br>
       <strong>🍶 소주 3병 획득!</strong>
     </div>
+
     <p id="clearEnergy"></p>
+
     <button class="main-btn" onclick="nextStage()">다음 스테이지</button>
+
   </div>
+
 
   <!-- 게임 오버 -->
   <div id="gameOverScreen" class="screen">
+
     <h1>GAME OVER</h1>
+
     <div class="character">🥴</div>
+
     <h2>정력 고갈!</h2>
+
     <div class="info">
       궐동 독사의 정력이 바닥났습니다.<br>
       누님 공략은 여기까지입니다.
     </div>
+
     <button class="main-btn" onclick="startGame()">다시 도전하기</button>
+
   </div>
+
 
   <!-- 엔딩 -->
   <div id="endingScreen" class="screen">
+
     <h1>전설의 완성</h1>
+
     <div class="character">👑🐍</div>
+
     <h2>전 스테이지 공략 완료!</h2>
+
     <div class="info">
       윤미래부터 끝판대장 오금수까지!<br><br>
       궐동 독사는 마침내 모든 난관을 극복하고<br>
-      전설의 독사로 거듭났습니다.
-      <br><br>
+      전설의 독사로 거듭났습니다.<br><br>
       <strong>누님, 저 독사에요!</strong>
     </div>
+
     <button class="main-btn" onclick="startGame()">처음부터 다시</button>
+
   </div>
 
 </div>
 
+
 <script>
+
 const bosses = [
-  { name:"윤미래", chance:70 },
-  { name:"L2광어", chance:65 },
-  { name:"유유해", chance:60 },
-  { name:"호박나이트에온 60대", chance:55 },
-  { name:"끝판대장 오금수", chance:50 }
+  { name:"윤미래", hp:50, chance:70 },
+  { name:"L2광어", hp:70, chance:65 },
+  { name:"유유해", hp:90, chance:60 },
+  { name:"호박나이트에온 60대", hp:110, chance:55 },
+  { name:"끝판대장 오금수", hp:130, chance:50 }
 ];
+
+const PLAYER_DAMAGE = 25;
+const ENERGY_LOSS = 20;
 
 let stage = 0;
 let energy = 100;
 let soju = 0;
+let bossHp = 0;
 let busy = false;
+
 
 function showScreen(id) {
   document.querySelectorAll(".screen").forEach(s => {
     s.classList.remove("active");
   });
+
   document.getElementById(id).classList.add("active");
 }
+
 
 function startGame() {
   stage = 0;
   energy = 100;
   soju = 0;
+  bossHp = bosses[0].hp;
   busy = false;
+
   updateStatus();
-  showScreen("battleScreen");
   updateStage();
+
   document.getElementById("message").textContent =
     "누님에게 도전장을 내미세요!";
+
+  showScreen("battleScreen");
 }
+
 
 function updateStage() {
   const boss = bosses[stage];
+
+  bossHp = boss.hp;
+
   document.getElementById("stageText").textContent =
     "STAGE " + (stage + 1) + " / 5";
-  document.getElementById("bossName").textContent = boss.name;
+
+  document.getElementById("bossName").textContent =
+    boss.name;
+
   document.getElementById("probability").textContent =
-    "승리 확률 " + boss.chance + "%";
+    "가위바위보 승리 확률 " + boss.chance + "%";
+
   updateStatus();
 }
+
 
 function updateStatus() {
   document.getElementById("energyBar").style.width =
     Math.max(0, energy) + "%";
+
   document.getElementById("energyText").textContent =
     energy + " / 100";
-  document.getElementById("sojuText").textContent = soju;
+
+  document.getElementById("sojuText").textContent =
+    soju;
+
+  const maxHp = bosses[stage].hp;
+
+  document.getElementById("bossHpBar").style.width =
+    Math.max(0, bossHp / maxHp * 100) + "%";
+
+  document.getElementById("bossHpText").textContent =
+    bossHp + " / " + maxHp;
 }
+
 
 function drinkSoju() {
   if (busy) return;
@@ -292,11 +464,13 @@ function drinkSoju() {
 
   soju--;
   energy = 100;
+
   updateStatus();
 
   document.getElementById("message").textContent =
-    "🍶 크으! 소주 한 병 원샷! 정력 게이지가 완전히 회복되었습니다!";
+    "🍶 크으! 소주 한 병 원샷! 정력 게이지 완전 회복!";
 }
+
 
 function play(player) {
   if (busy) return;
@@ -304,11 +478,13 @@ function play(player) {
   busy = true;
 
   const boss = bosses[stage];
+
   const roll = Math.random() * 100;
 
-  // 승리 확률과 무승부 확률을 적용한 결과
   let result;
 
+  // 스테이지별 승리 확률 적용
+  // 무승부 확률은 10%
   if (roll < boss.chance) {
     result = "win";
   } else if (roll < boss.chance + 10) {
@@ -317,81 +493,112 @@ function play(player) {
     result = "lose";
   }
 
-  const hands = ["가위", "바위", "보"];
   let enemy;
 
   if (result === "win") {
+
     // 플레이어가 이기는 손
     enemy = player === "가위" ? "보" :
             player === "바위" ? "가위" : "바위";
+
   } else if (result === "lose") {
+
     // 플레이어가 지는 손
     enemy = player === "가위" ? "바위" :
             player === "바위" ? "보" : "가위";
+
   } else {
+
     enemy = player;
+
   }
 
-  let message = "";
 
   if (result === "win") {
-    message =
-      "내 선택: " + player + "<br>" +
-      "누님 선택: " + enemy + "<br><br>" +
-      "🎉 승리! 궐동 독사의 유혹이 통했습니다!";
-    document.getElementById("message").innerHTML = message;
 
-    setTimeout(() => {
-      clearStage();
-    }, 1000);
+    bossHp = Math.max(0, bossHp - PLAYER_DAMAGE);
 
-  } else if (result === "lose") {
-    energy = Math.max(0, energy - 20);
     updateStatus();
 
-    message =
+    document.getElementById("message").innerHTML =
       "내 선택: " + player + "<br>" +
       "누님 선택: " + enemy + "<br><br>" +
-      "💔 패배! 누님에게 거절당했습니다.<br>" +
-      "정력 게이지 20 감소!";
-    document.getElementById("message").innerHTML = message;
+      "🎉 가위바위보 승리!<br>" +
+      "보스에게 " + PLAYER_DAMAGE + "의 피해를 입혔습니다!<br>" +
+      "남은 보스 체력: " + bossHp;
 
-    if (energy <= 0) {
+    if (bossHp <= 0) {
+
       setTimeout(() => {
-        busy = false;
-        showScreen("gameOverScreen");
-      }, 1000);
+        clearStage();
+      }, 900);
+
     } else {
+
       setTimeout(() => {
         busy = false;
       }, 700);
+
+    }
+
+  } else if (result === "lose") {
+
+    energy = Math.max(0, energy - ENERGY_LOSS);
+
+    updateStatus();
+
+    document.getElementById("message").innerHTML =
+      "내 선택: " + player + "<br>" +
+      "누님 선택: " + enemy + "<br><br>" +
+      "💔 패배! 누님에게 거절당했습니다.<br>" +
+      "정력 게이지 " + ENERGY_LOSS + " 감소!";
+
+    if (energy <= 0) {
+
+      setTimeout(() => {
+        busy = false;
+        showScreen("gameOverScreen");
+      }, 900);
+
+    } else {
+
+      setTimeout(() => {
+        busy = false;
+      }, 700);
+
     }
 
   } else {
-    message =
+
+    document.getElementById("message").innerHTML =
       "내 선택: " + player + "<br>" +
       "누님 선택: " + enemy + "<br><br>" +
-      "😅 무승부! 아직 승부는 끝나지 않았습니다.";
-    document.getElementById("message").innerHTML = message;
+      "😅 무승부! 승부를 다시 겨뤄야 합니다.";
 
     setTimeout(() => {
       busy = false;
     }, 700);
+
   }
 }
 
+
 function clearStage() {
   busy = false;
+
   soju += 3;
+
   updateStatus();
 
   document.getElementById("clearBossName").textContent =
     bosses[stage].name + " 공략 성공!";
+
   document.getElementById("clearEnergy").textContent =
     "현재 정력 게이지: " + energy + " / 100";
 
   showScreen("clearScreen");
 }
+
 
 function nextStage() {
   stage++;
@@ -402,12 +609,15 @@ function nextStage() {
   }
 
   busy = false;
+
   updateStage();
 
   document.getElementById("message").textContent =
     "다음 누님이 기다리고 있습니다. 각오하세요!";
+
   showScreen("battleScreen");
 }
+
 </script>
 
 </body>
