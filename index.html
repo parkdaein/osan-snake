@@ -3,11 +3,13 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>누님, 저 독사에요</title>
 
 <style>
-* { box-sizing:border-box; }
+* {
+  box-sizing:border-box;
+}
 
 body {
   margin:0;
@@ -35,15 +37,22 @@ h1 {
   margin:12px 0;
 }
 
-h2 { color:#ffd36b; }
+h2 {
+  color:#ffd36b;
+}
 
 .subtitle {
   color:#d6c5b0;
   font-size:14px;
 }
 
-.screen { display:none; }
-.screen.active { display:block; }
+.screen {
+  display:none;
+}
+
+.screen.active {
+  display:block;
+}
 
 .character {
   font-size:90px;
@@ -105,7 +114,9 @@ button {
   color:#24180c;
 }
 
-button:active { transform:scale(.96); }
+button:active {
+  transform:scale(.96);
+}
 
 button:disabled {
   opacity:.4;
@@ -204,30 +215,233 @@ button:disabled {
   margin-top:10px;
 }
 
-@media(max-width:500px) {
-  body { padding:5px; }
 
-  #game {
-    padding:10px;
-    min-height:95vh;
+/* 모바일 세로 화면 최적화 */
+@media (max-width:500px) and (orientation:portrait) {
+
+  html, body {
+    width:100%;
+    height:100%;
+    margin:0;
+    padding:0;
+    overflow:hidden;
   }
 
-  h1 { font-size:25px; }
+  body {
+    background:#29212d;
+  }
 
-  .character,.boss { font-size:70px; }
+  #game {
+    width:100%;
+    height:100vh;
+    height:100dvh;
+    min-height:0;
+    max-width:none;
+    margin:0;
+    padding:5px 8px;
+    border:0;
+    border-radius:0;
+    overflow-y:auto;
+    overflow-x:hidden;
+  }
 
-  button {
-    padding:11px 12px;
-    font-size:14px;
+  h1 {
+    font-size:21px;
+    margin:3px 0 5px;
+  }
+
+  h2 {
+    font-size:19px;
+    margin:5px 0;
+  }
+
+  h3 {
+    font-size:16px;
+    margin:5px 0;
+  }
+
+  p {
+    margin:4px 0;
+    font-size:13px;
+  }
+
+  .subtitle {
+    font-size:11px;
+  }
+
+  .character {
+    font-size:62px;
+    margin:8px auto;
+    line-height:1.1;
+  }
+
+  .boss {
+    font-size:43px;
+    margin:3px auto;
+    line-height:1.05;
+  }
+
+  .status {
+    padding:6px 8px;
+    margin:5px 0;
+    font-size:12px;
+  }
+
+  .gauge {
+    height:13px;
+    margin:4px 0;
+  }
+
+  .boss-gauge {
+    height:15px;
+    margin:4px 0;
+  }
+
+  .gauge-fill,
+  .boss-gauge-fill {
+    border-radius:20px;
+  }
+
+  .inventory {
+    font-size:13px;
+  }
+
+  .status button {
+    padding:5px 10px;
+    margin:3px;
+    font-size:12px;
+  }
+
+  .info {
+    padding:6px 8px;
+    margin:5px 0;
+    line-height:1.35;
+  }
+
+  .boss-name {
+    font-size:19px;
+    margin:2px 0;
+  }
+
+  .boss-dialogue {
+    padding:5px 7px;
+    margin:4px 0;
+    font-size:13px;
+    line-height:1.35;
+  }
+
+  .hp-label {
+    font-size:11px;
+    margin-top:5px;
+  }
+
+  #probability {
+    font-size:12px;
+    margin:3px 0;
   }
 
   .choice {
+    width:29%;
     min-width:0;
-    font-size:32px;
+    padding:7px 3px;
+    margin:3px 1px;
+    font-size:29px;
+    border-radius:9px;
   }
 
-  .boss-dialogue { font-size:14px; }
-  .defeat-dialogue { font-size:17px; }
+  .choice span {
+    font-size:11px;
+    margin-top:2px;
+  }
+
+  #message {
+    min-height:43px;
+    padding:6px;
+    margin:5px 0;
+    font-size:12px;
+    line-height:1.4;
+  }
+
+  button {
+    padding:8px 10px;
+    margin:3px;
+    font-size:13px;
+  }
+
+  .main-btn {
+    padding:11px 20px;
+    font-size:16px;
+  }
+
+  .defeat-dialogue {
+    padding:9px;
+    margin:8px 0;
+    font-size:16px;
+    line-height:1.4;
+  }
+
+  .result {
+    font-size:20px;
+    margin:6px;
+  }
+}
+
+
+/* 화면 높이가 짧은 휴대폰 추가 축소 */
+@media (max-width:500px) and (orientation:portrait) and (max-height:750px) {
+
+  #game {
+    padding:3px 6px;
+  }
+
+  h1 {
+    font-size:19px;
+    margin:2px 0 3px;
+  }
+
+  .status {
+    padding:4px 7px;
+    margin:3px 0;
+  }
+
+  .boss {
+    font-size:37px;
+  }
+
+  .info {
+    padding:5px 7px;
+    margin:3px 0;
+  }
+
+  .boss-dialogue {
+    padding:4px;
+    margin:3px 0;
+    font-size:12px;
+  }
+
+  .choice {
+    font-size:26px;
+    padding:5px 2px;
+  }
+
+  #message {
+    min-height:38px;
+    padding:5px;
+    margin:3px 0;
+  }
+
+  .character {
+    font-size:52px;
+    margin:5px auto;
+  }
+}
+
+
+/* 가로 화면에서는 기존 디자인 유지 */
+@media (max-width:800px) and (orientation:landscape) {
+  #game {
+    min-height:0;
+  }
 }
 </style>
 </head>
@@ -260,7 +474,6 @@ button:disabled {
 
     <h1>누님, 저 독사에요</h1>
 
-    <!-- 플레이어 상태 -->
     <div class="status">
       <div>🐍 궐동 독사 정력 게이지</div>
 
@@ -305,7 +518,6 @@ button:disabled {
     </div>
 
 
-    <!-- 가위바위보 -->
     <h3>가위바위보 대결!</h3>
     <p>승리하면 보스에게 피해를 줍니다!</p>
 
@@ -454,6 +666,9 @@ function showScreen(id) {
   });
 
   document.getElementById(id).classList.add("active");
+
+  const game = document.getElementById("game");
+  game.scrollTop = 0;
 }
 
 
@@ -550,8 +765,6 @@ function play(player) {
 
   let result;
 
-  // 스테이지별 승리 확률 적용
-  // 무승부 확률은 10%
   if (roll < boss.chance) {
     result = "win";
   } else if (roll < boss.chance + 10) {
@@ -563,19 +776,13 @@ function play(player) {
   let enemy;
 
   if (result === "win") {
-
     enemy = player === "가위" ? "보" :
             player === "바위" ? "가위" : "바위";
-
   } else if (result === "lose") {
-
     enemy = player === "가위" ? "바위" :
             player === "바위" ? "보" : "가위";
-
   } else {
-
     enemy = player;
-
   }
 
 
@@ -593,17 +800,13 @@ function play(player) {
       "남은 보스 체력: " + bossHp;
 
     if (bossHp <= 0) {
-
       setTimeout(() => {
         clearStage();
       }, 900);
-
     } else {
-
       setTimeout(() => {
         busy = false;
       }, 700);
-
     }
 
   } else if (result === "lose") {
@@ -619,18 +822,14 @@ function play(player) {
       "정력 게이지 " + ENERGY_LOSS + " 감소!";
 
     if (energy <= 0) {
-
       setTimeout(() => {
         busy = false;
         showScreen("gameOverScreen");
       }, 900);
-
     } else {
-
       setTimeout(() => {
         busy = false;
       }, 700);
-
     }
 
   } else {
