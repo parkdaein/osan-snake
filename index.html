@@ -162,6 +162,30 @@ button:disabled {
   color:#ffcf75;
 }
 
+.boss-dialogue {
+  background:#17131a;
+  border:1px solid #a87943;
+  border-radius:10px;
+  padding:12px;
+  margin:12px 0;
+  color:#ffe2a6;
+  font-size:16px;
+  font-weight:bold;
+  line-height:1.6;
+}
+
+.defeat-dialogue {
+  background:#17131a;
+  border:2px solid #e6a94b;
+  border-radius:12px;
+  padding:16px;
+  margin:15px 0;
+  color:#ffe2a6;
+  font-size:19px;
+  font-weight:bold;
+  line-height:1.7;
+}
+
 .small {
   font-size:13px;
   color:#c9b9c9;
@@ -201,6 +225,9 @@ button:disabled {
     min-width:0;
     font-size:32px;
   }
+
+  .boss-dialogue { font-size:14px; }
+  .defeat-dialogue { font-size:17px; }
 }
 </style>
 </head>
@@ -260,6 +287,10 @@ button:disabled {
 
       <div class="boss-name" id="bossName">윤미래</div>
 
+      <div class="boss-dialogue" id="bossDialogue">
+        난 생산라인의 꽃미녀 윤미래
+      </div>
+
       <div class="hp-label">
         <span>❤️ 보스 체력</span>
         <span id="bossHpText">50 / 50</span>
@@ -269,7 +300,7 @@ button:disabled {
         <div id="bossHpBar" class="boss-gauge-fill"></div>
       </div>
 
-      <p id="probability">승리 확률 70%</p>
+      <p id="probability">가위바위보 승리 확률 70%</p>
 
     </div>
 
@@ -306,7 +337,11 @@ button:disabled {
 
     <div class="character">😍</div>
 
-    <div class="result" id="clearBossName">윤미래</div>
+    <div class="result" id="clearBossName">윤미래 공략 성공!</div>
+
+    <div class="defeat-dialogue" id="defeatDialogue">
+      오늘따라 잘생겨보이네?
+    </div>
 
     <div class="info">
       보스의 체력을 모두 소진시켰습니다!<br>
@@ -366,11 +401,41 @@ button:disabled {
 <script>
 
 const bosses = [
-  { name:"윤미래", hp:50, chance:70 },
-  { name:"L2광어", hp:70, chance:65 },
-  { name:"유유해", hp:90, chance:60 },
-  { name:"호박나이트에온 60대", hp:110, chance:55 },
-  { name:"끝판대장 오금수", hp:130, chance:50 }
+  {
+    name:"윤미래",
+    hp:50,
+    chance:70,
+    intro:"난 생산라인의 꽃미녀 윤미래",
+    defeat:"오늘따라 잘생겨보이네?"
+  },
+  {
+    name:"L2광어",
+    hp:70,
+    chance:65,
+    intro:"난 광정보 드래곤캐슬의 여친",
+    defeat:"드래곤캐슬하고 헤어질게"
+  },
+  {
+    name:"유유해",
+    hp:90,
+    chance:60,
+    intro:"안녕하세요 중국에서 왔어요",
+    defeat:"여기.. 저의 쌀포대자루 빤스를 드릴게요.."
+  },
+  {
+    name:"호박나이트에온 60대",
+    hp:110,
+    chance:55,
+    intro:"내 아들이 곧 군대간다",
+    defeat:"나이는 숫자에 불과해 이리온.."
+  },
+  {
+    name:"끝판대장 오금수",
+    hp:130,
+    chance:50,
+    intro:"난 영업부의 얼짱 오금수",
+    defeat:"누나가 이뻐해줄께 이리와"
+  }
 ];
 
 const PLAYER_DAMAGE = 25;
@@ -419,6 +484,9 @@ function updateStage() {
 
   document.getElementById("bossName").textContent =
     boss.name;
+
+  document.getElementById("bossDialogue").textContent =
+    "💬 " + boss.intro;
 
   document.getElementById("probability").textContent =
     "가위바위보 승리 확률 " + boss.chance + "%";
@@ -478,7 +546,6 @@ function play(player) {
   busy = true;
 
   const boss = bosses[stage];
-
   const roll = Math.random() * 100;
 
   let result;
@@ -497,13 +564,11 @@ function play(player) {
 
   if (result === "win") {
 
-    // 플레이어가 이기는 손
     enemy = player === "가위" ? "보" :
             player === "바위" ? "가위" : "바위";
 
   } else if (result === "lose") {
 
-    // 플레이어가 지는 손
     enemy = player === "가위" ? "바위" :
             player === "바위" ? "보" : "가위";
 
@@ -592,6 +657,9 @@ function clearStage() {
 
   document.getElementById("clearBossName").textContent =
     bosses[stage].name + " 공략 성공!";
+
+  document.getElementById("defeatDialogue").textContent =
+    "💬 \"" + bosses[stage].defeat + "\"";
 
   document.getElementById("clearEnergy").textContent =
     "현재 정력 게이지: " + energy + " / 100";
