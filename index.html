@@ -37,8 +37,10 @@ h1 {
   margin:12px 0;
 }
 
-h2 {
-  color:#ffd36b;
+h2 { color:#ffd36b; }
+
+h3 {
+  margin:8px 0;
 }
 
 .subtitle {
@@ -46,13 +48,8 @@ h2 {
   font-size:14px;
 }
 
-.screen {
-  display:none;
-}
-
-.screen.active {
-  display:block;
-}
+.screen { display:none; }
+.screen.active { display:block; }
 
 .character {
   font-size:90px;
@@ -197,11 +194,6 @@ button:disabled {
   line-height:1.7;
 }
 
-.small {
-  font-size:13px;
-  color:#c9b9c9;
-}
-
 .result {
   font-size:25px;
   font-weight:bold;
@@ -216,7 +208,79 @@ button:disabled {
 }
 
 
-/* 모바일 세로 화면 최적화 */
+/* 가위바위보 결과 화면 */
+
+.battle-result {
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  background:#17131a;
+  border:1px solid #a87943;
+  border-radius:14px;
+  padding:12px 5px;
+  margin:8px 0;
+}
+
+.hand-card {
+  width:40%;
+  padding:8px 3px;
+  background:#3b303f;
+  border-radius:12px;
+}
+
+.hand-title {
+  font-size:13px;
+  color:#ffd36b;
+  font-weight:bold;
+}
+
+.hand-image {
+  font-size:55px;
+  line-height:1.4;
+  margin:5px 0;
+}
+
+.hand-name {
+  font-size:14px;
+  color:#fff;
+}
+
+.vs-text {
+  font-size:20px;
+  font-weight:bold;
+  color:#ffd36b;
+}
+
+.result-banner {
+  border-radius:10px;
+  padding:10px;
+  margin:8px 0;
+  font-size:17px;
+  font-weight:bold;
+  line-height:1.5;
+}
+
+.result-win {
+  background:#174c32;
+  color:#8dffb5;
+  border:1px solid #38a76a;
+}
+
+.result-lose {
+  background:#5a2027;
+  color:#ff9b9b;
+  border:1px solid #bd4a55;
+}
+
+.result-draw {
+  background:#51451f;
+  color:#ffe28a;
+  border:1px solid #a98a35;
+}
+
+
+/* 모바일 세로 화면 */
+
 @media (max-width:500px) and (orientation:portrait) {
 
   html, body {
@@ -295,11 +359,6 @@ button:disabled {
   .boss-gauge {
     height:15px;
     margin:4px 0;
-  }
-
-  .gauge-fill,
-  .boss-gauge-fill {
-    border-radius:20px;
   }
 
   .inventory {
@@ -384,10 +443,43 @@ button:disabled {
     font-size:20px;
     margin:6px;
   }
+
+  .battle-result {
+    padding:6px 3px;
+    margin:5px 0;
+  }
+
+  .hand-card {
+    padding:5px 2px;
+  }
+
+  .hand-image {
+    font-size:42px;
+    margin:2px 0;
+  }
+
+  .hand-title {
+    font-size:11px;
+  }
+
+  .hand-name {
+    font-size:12px;
+  }
+
+  .vs-text {
+    font-size:16px;
+  }
+
+  .result-banner {
+    padding:7px;
+    margin:5px 0;
+    font-size:14px;
+  }
 }
 
 
 /* 화면 높이가 짧은 휴대폰 추가 축소 */
+
 @media (max-width:500px) and (orientation:portrait) and (max-height:750px) {
 
   #game {
@@ -434,15 +526,26 @@ button:disabled {
     font-size:52px;
     margin:5px auto;
   }
+
+  .hand-image {
+    font-size:36px;
+  }
+
+  .result-banner {
+    font-size:13px;
+    padding:5px;
+  }
 }
 
 
-/* 가로 화면에서는 기존 디자인 유지 */
+/* 가로 화면 */
+
 @media (max-width:800px) and (orientation:landscape) {
   #game {
     min-height:0;
   }
 }
+
 </style>
 </head>
 
@@ -474,6 +577,7 @@ button:disabled {
 
     <h1>누님, 저 독사에요</h1>
 
+    <!-- 플레이어 상태 -->
     <div class="status">
       <div>🐍 궐동 독사 정력 게이지</div>
 
@@ -518,6 +622,7 @@ button:disabled {
     </div>
 
 
+    <!-- 가위바위보 선택 -->
     <h3>가위바위보 대결!</h3>
     <p>승리하면 보스에게 피해를 줍니다!</p>
 
@@ -535,6 +640,7 @@ button:disabled {
       </button>
     </div>
 
+    <!-- 결과 표시 -->
     <div id="message">
       누님에게 도전장을 내미세요!
     </div>
@@ -616,35 +722,35 @@ const bosses = [
   {
     name:"윤미래",
     hp:50,
-    chance:50,
+    chance:70,
     intro:"난 생산라인의 꽃미녀 윤미래",
     defeat:"오늘따라 잘생겨보이네?"
   },
   {
     name:"L2광어",
     hp:70,
-    chance:45,
+    chance:65,
     intro:"난 광정보 드래곤캐슬의 여친",
-    defeat:"드래곤캐슬하고 헤어질게 나랑 사귀자.."
+    defeat:"드래곤캐슬하고 헤어질게"
   },
   {
     name:"유유해",
     hp:90,
-    chance:40,
+    chance:60,
     intro:"안녕하세요 중국에서 왔어요",
     defeat:"여기.. 저의 쌀포대자루 빤스를 드릴게요.."
   },
   {
     name:"호박나이트에온 60대",
     hp:110,
-    chance:35,
+    chance:55,
     intro:"내 아들이 곧 군대간다",
     defeat:"나이는 숫자에 불과해 이리온.."
   },
   {
     name:"끝판대장 오금수",
     hp:130,
-    chance:15,
+    chance:50,
     intro:"난 영업부의 얼짱 오금수",
     defeat:"누나가 이뻐해줄께 이리와"
   }
@@ -765,6 +871,8 @@ function play(player) {
 
   let result;
 
+  // 스테이지별 승리 확률 적용
+  // 무승부 확률은 10%
   if (roll < boss.chance) {
     result = "win";
   } else if (roll < boss.chance + 10) {
@@ -785,6 +893,33 @@ function play(player) {
     enemy = player;
   }
 
+  const handImages = {
+    "가위":"✌️",
+    "바위":"✊",
+    "보":"✋"
+  };
+
+  // 양쪽의 선택을 이미지로 표시
+  let resultHtml = `
+    <div class="battle-result">
+
+      <div class="hand-card">
+        <div class="hand-title">🐍 궐동 독사</div>
+        <div class="hand-image">${handImages[player]}</div>
+        <div class="hand-name">${player}</div>
+      </div>
+
+      <div class="vs-text">VS</div>
+
+      <div class="hand-card">
+        <div class="hand-title">👩 누님</div>
+        <div class="hand-image">${handImages[enemy]}</div>
+        <div class="hand-name">${enemy}</div>
+      </div>
+
+    </div>
+  `;
+
 
   if (result === "win") {
 
@@ -792,21 +927,29 @@ function play(player) {
 
     updateStatus();
 
+    resultHtml += `
+      <div class="result-banner result-win">
+        🎉 WIN! 승리했습니다!<br>
+        보스 체력 ${PLAYER_DAMAGE} 감소!<br>
+        남은 체력: ${bossHp}
+      </div>
+    `;
+
     document.getElementById("message").innerHTML =
-      "내 선택: " + player + "<br>" +
-      "누님 선택: " + enemy + "<br><br>" +
-      "🎉 가위바위보 승리!<br>" +
-      "보스에게 " + PLAYER_DAMAGE + "의 피해를 입혔습니다!<br>" +
-      "남은 보스 체력: " + bossHp;
+      resultHtml;
 
     if (bossHp <= 0) {
+
       setTimeout(() => {
         clearStage();
-      }, 900);
+      }, 1200);
+
     } else {
+
       setTimeout(() => {
         busy = false;
-      }, 700);
+      }, 900);
+
     }
 
   } else if (result === "lose") {
@@ -815,33 +958,47 @@ function play(player) {
 
     updateStatus();
 
+    resultHtml += `
+      <div class="result-banner result-lose">
+        💔 LOSE! 패배했습니다!<br>
+        정력 게이지 ${ENERGY_LOSS} 감소!<br>
+        남은 정력: ${energy}
+      </div>
+    `;
+
     document.getElementById("message").innerHTML =
-      "내 선택: " + player + "<br>" +
-      "누님 선택: " + enemy + "<br><br>" +
-      "💔 패배! 누님에게 거절당했습니다.<br>" +
-      "정력 게이지 " + ENERGY_LOSS + " 감소!";
+      resultHtml;
 
     if (energy <= 0) {
+
       setTimeout(() => {
         busy = false;
         showScreen("gameOverScreen");
-      }, 900);
+      }, 1200);
+
     } else {
+
       setTimeout(() => {
         busy = false;
-      }, 700);
+      }, 900);
+
     }
 
   } else {
 
+    resultHtml += `
+      <div class="result-banner result-draw">
+        😅 DRAW! 무승부입니다!<br>
+        양쪽 모두 피해 없음!
+      </div>
+    `;
+
     document.getElementById("message").innerHTML =
-      "내 선택: " + player + "<br>" +
-      "누님 선택: " + enemy + "<br><br>" +
-      "😅 무승부! 승부를 다시 겨뤄야 합니다.";
+      resultHtml;
 
     setTimeout(() => {
       busy = false;
-    }, 700);
+    }, 900);
 
   }
 }
